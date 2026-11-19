@@ -100,11 +100,15 @@ public class Conta {
      */
     public void transferir(Conta destino, double valor) {
         validarAtiva();
+
         destino.validarAtiva();
+
         validarValorPositivo(valor);
+
         if (valor > saldo) {
             throw new IllegalStateException("Saldo insuficiente.");
         }
+
         saldo -= valor;
         destino.saldo += valor;
     }
@@ -118,8 +122,7 @@ public class Conta {
      * - A propriedade ativa deve ser alterada para false.
      */
     public void encerrar() {
-        // TODO: Implemente usando TDD
-        throw new UnsupportedOperationException();
+        ativa = false;
     }
 
     private void validarAtiva() {
