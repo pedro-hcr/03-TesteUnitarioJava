@@ -61,11 +61,15 @@ public class Conta {
      * - O saldo deve ser atualizado corretamente.
      */
     public void depositar(double valor) {
-        if (valor <= 0) {
-            throw new IllegalArgumentException("O valor do depósito deve ser maior que zero.");
-        }
+        validarValorPositivo(valor);
         saldo += valor;
 
+    }
+
+    private void validarValorPositivo(double valor) {
+        if (valor <= 0) {
+            throw new IllegalArgumentException("O valor deve ser maior que zero");
+        }
     }
 
     /**
@@ -77,6 +81,7 @@ public class Conta {
      * - O saldo deve ser atualizado corretamente.
      */
     public void sacar(double valor) {
+        validarValorPositivo(valor);
         // TODO: Implemente usando TDD
         throw new UnsupportedOperationException();
     }
@@ -90,8 +95,14 @@ public class Conta {
      * - O saldo de ambas as contas deve ser atualizado corretamente.
      */
     public void transferir(Conta destino, double valor) {
-        // TODO: Implemente usando TDD
-        throw new UnsupportedOperationException();
+        validarAtiva();
+        destino.validarAtiva();
+        validarValorPositivo(valor);
+        if (valor > saldo) {
+            throw new IllegalStateException("Saldo insuficiente.");
+        }
+        saldo -= valor;
+        destino.saldo += valor;
     }
 
     /**
@@ -105,5 +116,11 @@ public class Conta {
     public void encerrar() {
         // TODO: Implemente usando TDD
         throw new UnsupportedOperationException();
+    }
+
+    private void validarAtiva() {
+        if (!ativa) {
+            throw new IllegalStateException("A conta está inativa.");
+        }
     }
 }

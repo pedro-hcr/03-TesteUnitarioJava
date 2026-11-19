@@ -138,6 +138,17 @@ class ContaTest {
     // - Transferência com conta destino inativa lança exceção
     // =======================================================
 
+    @Test
+    void transferir_ValorValido_AtualizaSaldoDeAmbasContas() {
+        var origem = new Conta("Maria", 200);
+        var destino = new Conta("João", 100);
+
+        origem.transferir(destino, 50);
+
+        assertEquals(150, origem.getSaldo());
+        assertEquals(150, destino.getSaldo());
+    }
+
     // =======================================================
     // Testes para encerrar
     // Sugestão de testes:
@@ -146,5 +157,11 @@ class ContaTest {
     // - Encerrar conta já inativa lança IllegalStateException
     // - Conta encerrada tem isAtiva() == false
     // =======================================================
+
+    @Test
+    void depositar_ValorNegativo_LancaIllegalArgumentException() {
+        var conta = new Conta("Maria", 100);
+        assertThrows(IllegalArgumentException.class, () -> conta.depositar(-10));
+    }
 
 }
