@@ -114,11 +114,11 @@ class ContaTest {
     @Test
     void depositar_ValorZero_LancaIllegalArgumentException() {
         var conta = new Conta("Maria", 100);
-        
+
         assertThrows(IllegalArgumentException.class, () -> conta.depositar(0));
         assertEquals(100, conta.getSaldo(), 0.001);
     }
-    
+
     @Test
     void depositar_ValorNegativo_LancaIllegalArgumentException() {
         var conta = new Conta("Maria", 100);
@@ -139,30 +139,30 @@ class ContaTest {
     void sacar_ValorValido_AtualizaSaldo() {
         // Arrange
         var conta = new Conta("Maria", 100);
-        
+
         // Act
         conta.sacar(40);
-        
+
         // Assert
         assertEquals(60, conta.getSaldo(), 0.001);
     }
-    
+
     @Test
     void sacar_ValorZero_LancaIllegalArgumentException() {
         var conta = new Conta("Maria", 100);
-        
+
         assertThrows(IllegalArgumentException.class, () -> conta.sacar(0));
         assertEquals(100, conta.getSaldo(), 0.001);
     }
-    
+
     @Test
     void sacar_ValorNegativo_LancaIllegalArgumentException() {
         var conta = new Conta("Maria", 100);
-        
+
         assertThrows(IllegalArgumentException.class, () -> conta.sacar(-10));
         assertEquals(100, conta.getSaldo(), 0.001);
     }
-    
+
     @Test
     void sacar_ValorMaiorQueSaldo_LancaIllegalStateException() {
         var conta = new Conta("Maria", 100);
@@ -170,7 +170,18 @@ class ContaTest {
         assertThrows(IllegalStateException.class, () -> conta.sacar(101));
         assertEquals(100, conta.getSaldo(), 0.001);
     }
-    
+
+    @Test
+    void sacar_ContaInativa_LancaIllegalStateException() {
+        var conta = new Conta("Maria");
+        conta.encerrar();
+
+        var ex = assertThrows(IllegalStateException.class, () -> conta.sacar(10));
+
+        assertEquals("A conta está inativa.", ex.getMessage());
+        assertEquals(0, conta.getSaldo(), 0.001);
+    }
+
     // =======================================================
     // Testes para transferir
     // Sugestão de testes:
@@ -191,7 +202,7 @@ class ContaTest {
         assertEquals(150, origem.getSaldo());
         assertEquals(150, destino.getSaldo());
     }
-    
+
     // =======================================================
     // Testes para encerrar
     // Sugestão de testes:
@@ -200,7 +211,6 @@ class ContaTest {
     // - Encerrar conta já inativa lança IllegalStateException
     // - Conta encerrada tem isAtiva() == false
     // =======================================================
-
 
     @Test
     void encerrar_SaldoZero_DesativaConta() {

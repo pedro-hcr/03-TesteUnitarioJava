@@ -82,6 +82,7 @@ public class Conta {
      * - O saldo deve ser atualizado corretamente.
      */
     public void sacar(double valor) {
+        validarAtiva();
         validarValorPositivo(valor);
 
         if (valor > saldo) {
