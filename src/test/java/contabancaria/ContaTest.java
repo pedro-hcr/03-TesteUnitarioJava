@@ -222,12 +222,12 @@ class ContaTest {
     }
 
     @Test
-    void encerrar_ContaJaInativa_LancaIllegalStateException() {
+    void depositar_ContaInativa_LancaIllegalStateException() {
         var conta = new Conta("Maria");
         conta.encerrar();
 
-        assertThrows(IllegalStateException.class, () -> conta.encerrar());
+        assertThrows(IllegalStateException.class, () -> conta.depositar(10));
 
-        assertFalse(conta.isAtiva());
+        assertEquals(0, conta.getSaldo(), 0.001);
     }
 }

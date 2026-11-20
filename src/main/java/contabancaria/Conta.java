@@ -61,6 +61,7 @@ public class Conta {
      * - O saldo deve ser atualizado corretamente.
      */
     public void depositar(double valor) {
+        validarAtiva();
         validarValorPositivo(valor);
         saldo += valor;
 
