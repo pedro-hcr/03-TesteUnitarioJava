@@ -122,6 +122,10 @@ public class Conta {
      * - A propriedade ativa deve ser alterada para false.
      */
     public void encerrar() {
+        validarAtiva();
+        if (saldo != 0) {
+            throw new IllegalStateException("Só é possível encerrar conta com saldo zero.");
+        }
         ativa = false;
     }
 
